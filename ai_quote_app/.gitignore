@@ -1,0 +1,13 @@
+# Ignore environment variables file
+.env
+
+# Ignore node_modules (to avoid uploading dependencies to GitHub)
+/node_modules/
+
+# Ignore build and log files
+/build/
+/dist/
+*.log
+
+# Ignore Vercel or other deployment-related files
+.vercel/
