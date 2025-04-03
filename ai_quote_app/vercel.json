@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/index.js",            // Entry point for your React app (React app starts here)
+      "src": "src/index.js",            // Entry point for React (this should be your main React file)
       "use": "@vercel/static-build"     // For static site (React build)
     },
     {
@@ -12,12 +12,12 @@
   ],
   "routes": [
     {
-      "src": "/api/sendQuote",         // Route for your API endpoint
+      "src": "/api/sendQuote",         // API route
       "dest": "api/sendQuote.js"       // Path to your API handler
     },
     {
       "src": "/(.*)",                   // Catch-all route for serving the React app
-      "dest": "public/index.html"      // This ensures that React's `index.html` is served
+      "dest": "/build/index.html"      // Serve from the build folder after React build
     }
   ]
 }
