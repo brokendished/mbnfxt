@@ -2,18 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/App.js",
-      "use": "@vercel/node"
+      "src": "src/index.js",            // Entry point for React (this will be your main React file)
+      "use": "@vercel/static-build"     // For static site (React build)
     },
     {
-      "src": "api/sendQuote.js",
-      "use": "@vercel/node"
+      "src": "api/sendQuote.js",        // Your API endpoint
+      "use": "@vercel/node"             // For Node.js API
     }
   ],
   "routes": [
     {
-      "src": "/api/sendQuote",
-      "dest": "api/sendQuote.js"
+      "src": "/api/sendQuote",         // API route
+      "dest": "api/sendQuote.js"       // Path to your API handler
+    },
+    {
+      "src": "/(.*)",                   // Catch-all route for serving the React app
+      "dest": "public/index.html"      // Serve the React `index.html` from the `public/` folder
     }
   ]
 }
