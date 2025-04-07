@@ -1,60 +1,29 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import "./ChatbotForm.css";
 
 const ChatbotForm = () => {
-  const [description, setDescription] = useState('');
-  const [photos, setPhotos] = useState([]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  const handlePhotoUpload = (e) => {
-    setPhotos([...e.target.files]);
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post('/api/sendQuote', {
-        description,
-        photos,
-        name,
-        email,
-      });
-
-      if (response.status === 200) {
-        setSubmitted(true);
-      }
-    } catch (error) {
-      console.error("Error sending quote", error);
-    }
-  };
-
   return (
-    <div>
-      <textarea
-        placeholder="Describe the issue"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <input
-        type="file"
-        multiple
-        accept="image/*"
-        onChange={handlePhotoUpload}
-      />
-      <input
-        placeholder="Your Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        placeholder="Your Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={handleSubmit}>Send to Contractor</button>
+    <div className="chatbot-wrapper">
+      <div className="chatbot-box">
+        <h1>👩‍🔧 AI Quote Assistant</h1>
+        <p className="subtitle">Describe your problem, upload a photo, and we'll get a contractor to quote it fast.</p>
+        <form className="chatbot-form">
+          <textarea placeholder="Hey there! What's going on with your dishwasher?" />
+          <input type="file" />
+          <input type="text" placeholder="Your Name" />
+          <input type="email" placeholder="Your Email" />
+          <button type="submit">📤 Send to Contractor</button>
+        </form>
+      </div>
 
-      {submitted && <div>Quote Summary Sent!</div>}
+      <footer className="footer">
+        <div className="footer-links">
+          <a href="#">Contact</a>
+          <a href="#">Terms</a>
+          <a href="#">About</a>
+        </div>
+        <p>&copy; {new Date().getFullYear()} BrokenDishwasher.com</p>
+      </footer>
     </div>
   );
 };
