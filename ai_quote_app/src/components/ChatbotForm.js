@@ -6,11 +6,13 @@ const ChatbotForm = () => {
     description: "",
     name: "",
     email: "",
-    file: null
+    file: null,
   });
 
   const [preview, setPreview] = useState(null);
   const [responseMsg, setResponseMsg] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
+  const [isThinking, setIsThinking] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,9 +25,7 @@ const ChatbotForm = () => {
 
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
+      reader.onloadend = () => setPreview(reader.result);
       reader.readAsDataURL(file);
     } else {
       setPreview(null);
@@ -34,8 +34,9 @@ const ChatbotForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setResponseMsg("⏳ Sending to contractor…");
+    setAiResponse("");
+    setIsThinking(true);
 
     const data = new FormData();
     data.append("description", formData.description);
@@ -46,19 +47,42 @@ const ChatbotForm = () => {
     try {
       const res = await fetch("/api/sendQuote", {
         method: "POST",
-        body: data
+        body: data,
       });
 
       if (res.ok) {
-        setResponseMsg("✅ Sent! A contractor will be in touch soon.");
+        setResponseMsg("✅ Sent!");
         setFormData({ description: "", name: "", email: "", file: null });
         setPreview(null);
+
+        // ✨ Fake AI reply
+        setTimeout(() => {
+          const msg = generateFakeAiReply(formData.description);
+          setAiResponse(msg);
+          setIsThinking(false);
+        }, 1500);
       } else {
         setResponseMsg("❌ Something went wrong.");
+        setIsThinking(false);
       }
     } catch (err) {
       console.error(err);
       setResponseMsg("❌ Error sending. Try again.");
+      setIsThinking(false);
+    }
+  };
+
+  // Just a fun little guesser based on keywords
+  const generateFakeAiReply = (text) => {
+    const lower = text.toLowerCase();
+    if (lower.includes("leak")) {
+      return "💡 Sounds like a leaky valve or hose. I’ll send this to a contractor for confirmation.";
+    } else if (lower.includes("noise") || lower.includes("grinding")) {
+      return "🔧 Hmm, that could be a worn-out motor or stuck food. Let’s have someone check it.";
+    } else if (lower.includes("won't start") || lower.includes("not turning on")) {
+      return "⚠️ That might be electrical — could be the door latch, power, or control board.";
+    } else {
+      return "📬 Got it! I’ve passed this along to a contractor for a proper quote.";
     }
   };
 
@@ -66,7 +90,9 @@ const ChatbotForm = () => {
     <div className="chatbot-wrapper">
       <div className="chatbot-box">
         <h1>👩‍🔧 AI Quote Assistant</h1>
-        <p className="subtitle">Describe your problem, upload a photo, and we'll get a contractor to quote it fast.</p>
+        <p className="subtitle">
+          Describe your problem, upload a photo, and we'll get a contractor to quote it fast.
+        </p>
 
         <form className="chatbot-form" onSubmit={handleSubmit}>
           <textarea
@@ -81,7 +107,12 @@ const ChatbotForm = () => {
             <img
               src={preview}
               alt="Preview"
-              style={{ width: "100%", maxWidth: "300px", borderRadius: "12px", marginTop: "10px" }}
+              style={{
+                width: "100%",
+                maxWidth: "300px",
+                borderRadius: "12px",
+                marginTop: "10px",
+              }}
             />
           )}
           <input
@@ -104,6 +135,8 @@ const ChatbotForm = () => {
         </form>
 
         {responseMsg && <p style={{ marginTop: "1rem", textAlign: "center" }}>{responseMsg}</p>}
+        {isThinking && <p style={{ textAlign: "center" }}>🤖 Thinking...</p>}
+        {aiResponse && <div className="ai-bubble">{aiResponse}</div>}
       </div>
 
       <footer className="footer">
