@@ -1,23 +1,23 @@
 {
-  "name": "your-project-name",                      // Your project name
-  "version": "1.0.0",                                // Your project version
+  "name": "your-project-name",
+  "version": "1.0.0",
   "engines": {
-    "node": "18.x"                                   // Specify Node.js 18.x
+    "node": "18.x"
   },
   "scripts": {
-    "start": "react-scripts start",                  // Development start script
-    "build": "react-scripts build",                  // Production build script
-    "test": "react-scripts test",                    // Test script
-    "eject": "react-scripts eject"                   // Eject script
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
-    "react": "^18.0.0",                             // React version
-    "react-dom": "^18.0.0",                         // React DOM version
-    "react-scripts": "4.0.3",                       // React build tool
-    "axios": "^0.21.1"                              // Example API request library (if needed)
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "4.0.3",
+    "axios": "^0.21.1"
   },
   "devDependencies": {
-    "eslint": "^7.32.0"                             // ESLint (if used)
+    "eslint": "^7.32.0"
   },
   "browserslist": {
     "production": [
