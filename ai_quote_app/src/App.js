@@ -1,10 +1,9 @@
 import React from "react";
-import ChatbotForm from "./components/ChatbotForm";
-
+import ChatbotChat from "./components/ChatbotChat";
 function App() {
   return (
     <div className="App">
-      <ChatbotForm />
+      <ChatbotChat />
     </div>
   );
 }
