@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import ChatbotForm from './components/ChatbotForm';
+import React from "react";
+import ChatbotForm from "./components/ChatbotForm";
 
 function App() {
   return (
-    <div>
-      <h1>AI Quote Assistant</h1>
+    <div className="App">
       <ChatbotForm />
     </div>
   );
